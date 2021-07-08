@@ -1,0 +1,33 @@
+.card-container {
+    width: 500px;
+    box-shadow: 0px 0px 15px -5px;
+    transition: 0.5s;
+    animation:  ease-in;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.card-container:hover {
+    border: solid;
+    box-shadow: 0px 0px 15px 0px;
+}
+
+.card-body {
+    margin: 1rem;
+    margin-top:  0.5rem;
+    text-align: left;
+}
+
+.card-affected {
+    text-align: left;
+    margin-left: 15px;
+}
+
+h3,p {
+    margin: 0;
+    padding: 0;
+}
+
+.card-title {
+    margin-bottom: 0.5rem;
+}
