@@ -4,6 +4,7 @@
     justify-content: space-around;
     top: 250px !important;
     left: 150px;
+    flex-wrap: wrap;
 }
 
 .calendarComponent {
