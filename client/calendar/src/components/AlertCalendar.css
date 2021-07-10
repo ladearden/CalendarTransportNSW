@@ -8,6 +8,10 @@
 }
 
 .calendarComponent {
+    
+}
+
+.calendarFilterContainer {
     height: 100% !important;
     position: -webkit-sticky;
     position: sticky;
@@ -15,8 +19,3 @@
     max-width: fit-content;
     flex: 1;
 }
-
-/* .statusComponent {
-    right: 0 !important;
-    position: relative !important;
-} */

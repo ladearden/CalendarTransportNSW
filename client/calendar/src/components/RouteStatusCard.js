@@ -7,9 +7,9 @@ import data from '../data/backupInfoTrain.json';
 function RouteStatusCard(props) {
 
     return (
-        <div>
-            <div className="card-container">
-                        <div className="card-title">
+        <div >
+            <div className="card-container" >
+                        <div className="card-title" key={props.id}>
                             <h3>{props.title}</h3>
                         </div>
                         <div className="card-date">

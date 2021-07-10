@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import RouteStatusCard from './RouteStatusCard';
 import GetAlerts from './GetAlerts';
 
@@ -11,46 +11,49 @@ function checkDate(dateToCheck, startDate, endDate) {
     return (dateToCheck >= startDate && dateToCheck <= endDate);
 }
 
-
-let cardCount = 0;
-
 // Route Status must have the whole json object
 function RouteStatus(props) {
     const [alerts, setAlerts] = useState([]);
-    const [loaded, gotAlert] = useState(false);
-    const [cards, setCount] = useState(0);
-    const current = [];
+    const [filters, setFilters] = useState([]);
 
     const sendAlertsToRouteStatus = (data) => {
         setAlerts(data);
     }
 
-    
+    const updateFilter = () => {
+        let filter = props.checkedFilters.filter(f => f.isChecked)
+                                            .map(v => v.value);
+        setFilters(filter);
+    }
 
     useEffect(() => {
-            cardCount = document.getElementsByClassName("card-container").length;
-            if (cardCount <= 0) {
-                document.getElementById("transportAlerts").innerHTML=`No alerts on ${formatDate(props.date)}`;
-            }
-            else {
-                document.getElementById("transportAlerts").innerHTML="";
-            }
-            
-           
-    });
+        
+        updateFilter();
+
+
+    }, [props.checkedFilters]);
+
+    //console.log(filters);
+    
 
     return (
         <div>
             <GetAlerts sendAlertsToRouteStatus={sendAlertsToRouteStatus}></GetAlerts>
             <div id="transportAlerts"></div>
-            {/* {alerts.version} */}
             {alerts? Object.keys(alerts).map(a => {
                 const info = alerts[a];
                 return (
                         <div key={a} >
-                            {/* <div>{console.log(info.current)}</div> */}
                             <div>{info.current ? info.current.filter(c => {
-                                                                            return !c.subtitle.includes("<a") && c.properties.speechText &&
+                                                                            function modes() {
+                                                                                if(typeof c.affected.lines !== 'undefined') {
+                                                                                    let lines = Object.keys(c.affected.lines).map(function(_) { return c.affected.lines[_]; });
+                                                                                    let [linesArr] = lines;
+                                                                                    return linesArr.product.class;
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            return !c.subtitle.includes("<a") && c.properties.speechText && filters.includes(c.priority) && filters.includes(modes()) &&
                                                                                 checkDate(formatDate(props.date),formatDate(new Date(c.timestamps.validity.flat()[0].from)),formatDate(new Date(c.timestamps.validity.flat()[0].to)))
                                                                         }).map(c => {
                                     return (
@@ -58,6 +61,7 @@ function RouteStatus(props) {
                                         <div key={c.id}>
                                             
                                             <RouteStatusCard
+                                            id={c.id}
                                             title={c.subtitle}
                                             dateAffected={c.timestamps.validity ? c.timestamps.validity.map(v => {
                                                 return (
@@ -88,7 +92,7 @@ function RouteStatus(props) {
                         </div>
                 )
             }) : null}
-            {/* {<p>loading...</p>} */}
+            
         </div>
     );
 }

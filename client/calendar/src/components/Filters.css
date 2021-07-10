@@ -1,0 +1,36 @@
+.filterContainer {
+    
+    display:grid;
+    grid-auto-rows: minmax(15px, auto);
+    grid-template-columns: repeat(2, auto);
+    max-height: auto;
+}
+
+.filters {
+    background: white;
+    border: solid;
+    border-color: gray;
+    border-width: thin;
+}
+
+.checkboxes {
+    display: flex;
+    flex-direction: column;
+}
+.checkboxContainer {
+    margin-right: auto;
+    padding-left: 30px;
+    right: 5px;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.modeContainer {
+    flex: 1;
+}
+
+.grid-item-2 {
+    display: flex;
+}

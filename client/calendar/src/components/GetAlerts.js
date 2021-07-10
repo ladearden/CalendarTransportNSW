@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const fetchAlertsFromServer = async () => {
     const data = await fetch('http://localhost:3300/api');
@@ -19,7 +19,10 @@ const GetAlerts = ({sendAlertsToRouteStatus}) => {
         setInfo(res);
     })
 
-    sendAlertsToRouteStatus(alertsInfo);
+    useEffect(() => {
+        sendAlertsToRouteStatus(alertsInfo);
+    });
+    
     return (
         <div>
             
